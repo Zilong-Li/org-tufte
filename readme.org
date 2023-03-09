@@ -1,0 +1,15 @@
+#+title: Org file to beautiful Tufte html with one command
+
+I really like the design of Edward Tufte’s books and handouts and its [[https://edwardtufte.github.io/tufte-css/][css]]. However, there is no single command for just exporting a org file to the Tufte-like html for lazy people like me or newbie who don't know too much about org mode setups. Although there is [[https://github.com/dakrone/ox-tufte][ox-tufte]] intending to do the job, the css and html template is not totally compatible and not responsive on mobile device, and it's hard to use for newbie. Based on my own taste, I added some nice features.
+
+* Features
+- modern responsive html page.
+- use fast and powerful =katex= instead of =mathjax= to render math.
+- one command =M-x export-org-tufte-html= just give me what I want
+- just works without having any org options eg =#+html_head:=
+- disable full-width figures in default.
+
+* Credits
+some codes are copied from
+- https://github.com/dakrone/ox-tufte
+- https://github.com/sulami/sulami.github.io/blob/develop/config.el
