@@ -68,9 +68,7 @@
                      (template . org-tufte-modern-html-template)
                      (section . org-tufte-modern-html-section)
                      (headline . org-tufte-modern-html-headline)
-                     (item . org-html-item))
-  :options-alist '((:section-number t)
-                   (:html-mathjax-template nil nil org-tufte-katex-template)))
+                     (item . org-html-item)))
 
 ;;; Transcode Functions
 
