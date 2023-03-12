@@ -16,9 +16,11 @@ I feel like being distracted by too many colors in code blocks, so the highlight
 
 * Screenshot
 
-[[file:demo-1.jpg]]
+see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here
 
-[[file:demo-2.jpg]]
+[[file:example-1.jpg]]
+
+[[file:example-2.jpg]]
 
 * Credits
 some codes are copied from

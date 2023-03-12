@@ -113,5 +113,3 @@ Source code highlighting
 (setq org-tufte-htmlize-code t)
 #+end_src
 
-#+RESULTS:
-: t
