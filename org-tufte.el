@@ -32,6 +32,19 @@
   :version "24.4"
   :package-version '(Org . "8.0"))
 
+(defcustom org-tufte-katex-template "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css\" integrity=\"sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0\" crossorigin=\"anonymous\">
+<script defer src=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js\" integrity=\"sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4\" crossorigin=\"anonymous\"></script>
+<script defer src=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js\" integrity=\"sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05\" crossorigin=\"anonymous\"
+    onload=\"renderMathInElement(document.body);\"></script>"
+  "Katex api as backend."
+  :group 'org-export-html
+  :type 'string)
+
+(defcustom org-tufte-htmlize-code nil
+  "Non-nil will htmlize src code when exporting to html."
+  :group 'org-tufte-export
+  :type 'boolean)
+
 (defcustom org-tufte-include-footnotes-at-bottom nil
   "Non-nil means to include footnotes at the bottom of the page
   in addition to being included as sidenotes. Sidenotes are not
@@ -39,14 +52,6 @@
   additionally include them at the bottom."
   :group 'org-tufte-export
   :type 'boolean)
-
-(defcustom org-tufte-katex-template "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css\" integrity=\"sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0\" crossorigin=\"anonymous\">
-<script defer src=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js\" integrity=\"sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4\" crossorigin=\"anonymous\"></script>
-<script defer src=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js\" integrity=\"sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05\" crossorigin=\"anonymous\"
-    onload=\"renderMathInElement(document.body);\"></script>"
-  "Katex api as backend"
-  :group 'org-export-html
-  :type 'string)
 
 ;;; Define Back-End
 
@@ -148,7 +153,6 @@ is nil. INFO is a plist used as a communication channel."
   (format "<pre class=\"code\"><code>%s</code></pre>"
           (org-html-format-code src-block info)))
 
-;;; https://github.com/sulami/sulami.github.io/blob/develop/config.el
 (defun org-tufte-modern-html-template (contents info)
   (concat
    "<!DOCTYPE html>\n"
@@ -161,6 +165,8 @@ is nil. INFO is a plist used as a communication channel."
            (org-export-data (plist-get info :author) info))
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/normalize.css\" type=\"text/css\" />\n"
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/tufte.css\" type=\"text/css\" />\n"
+   (when org-tufte-htmlize-code
+       (format "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/htmlize.css\" type=\"text/css\" />\n"))
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/org.css\" type=\"text/css\" />\n"
    org-tufte-katex-template
    "</head>\n"

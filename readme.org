@@ -9,6 +9,10 @@ I really like the design of Edward Tufte’s books and handouts and its [[https:
 - just works without having any org options eg =#+html_head:=
 - disable full-width figures in default.
 
+* Customization
+
+I feel like being distracted by too many colors in code blocks, so the highlight of code block is not enabled. But you can get this feature by =(setq org-tufte-htmlize-code t)=
+
 * Credits
 some codes are copied from
 - https://github.com/dakrone/ox-tufte
