@@ -58,13 +58,13 @@
 (org-export-define-derived-backend 'tufte-html 'html
   :menu-entry
   '(?T "Export to Tufte-HTML"
-       ((?T "To temporary buffer"
-            (lambda (a s v b) (org-tufte-export-to-buffer a s v)))
-        (?t "To file" (lambda (a s v b) (org-tufte-export-to-file a s v)))
-        (?o "To file and open"
-            (lambda (a s v b)
-              (if a (org-tufte-export-to-file t s v)
-                (org-open-file (org-tufte-export-to-file nil s v)))))))
+    ((?T "To temporary buffer"
+         (lambda (a s v b) (org-tufte-export-to-buffer a s v)))
+     (?t "To file" (lambda (a s v b) (org-tufte-export-to-file a s v)))
+     (?o "To file and open"
+         (lambda (a s v b)
+           (if a (org-tufte-export-to-file t s v)
+             (org-open-file (org-tufte-export-to-file nil s v)))))))
   :translate-alist '((footnote-reference . org-tufte-footnote-reference)
                      (src-block . org-tufte-src-block)
                      (link . org-tufte-maybe-margin-note-link)
@@ -72,7 +72,6 @@
                      (verse-block . org-tufte-verse-block)
                      (template . org-tufte-modern-html-template)
                      (section . org-tufte-modern-html-section)
-                     (headline . org-tufte-modern-html-headline)
                      (item . org-html-item)))
 
 ;;; Transcode Functions
@@ -166,7 +165,7 @@ is nil. INFO is a plist used as a communication channel."
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/normalize.css\" type=\"text/css\" />\n"
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/tufte.css\" type=\"text/css\" />\n"
    (when org-tufte-htmlize-code
-       (format "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/htmlize.css\" type=\"text/css\" />\n"))
+     (format "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/htmlize.css\" type=\"text/css\" />\n"))
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/org.css\" type=\"text/css\" />\n"
    org-tufte-katex-template
    "</head>\n"
@@ -184,22 +183,11 @@ is nil. INFO is a plist used as a communication channel."
    </body>\n"
    "</html>\n"))
 
-;; setq session-num nil
 (defun org-tufte-modern-html-section (section contents info)
-  (let* ((headline (org-export-get-parent-headline section))
-         (level (org-element-property :level headline)))
-    (concat
-     "<section>"
-     (when headline
-       (concat
-        (format "<h%s>" (1+ level))
-        ;; NB Fix for that one post that has subscript in headlines.
-        (format "%s" (s-replace-regexp (rx "_{" (group-n 1 (1+ anything)) "}")
-                                       "<sub>\\1</sub>"
-                                       (org-element-property :raw-value headline)))
-        (format "</h%s>\n" (1+ level))))
-     contents
-     "</section>\n")))
+  (concat
+   "<section>"
+   contents
+   "</section>\n"))
 
 
 (defun org-tufte-modern-html-headline (headline contents info)
@@ -289,7 +277,7 @@ Return output file name."
 ;;; export command
 
 (fset 'export-org-tufte-html
-   (kmacro-lambda-form [?\C-c ?\C-e ?T ?o] 0 "%d"))
+      (kmacro-lambda-form [?\C-c ?\C-e ?T ?o] 0 "%d"))
 
 
 (provide 'org-tufte)
