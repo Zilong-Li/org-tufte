@@ -103,7 +103,7 @@ end
 [[file:demo-1.jpg]]
 
 #+CAPTION: Demo Picture in full-wide
-#+ATTR_HTML: :class fullwidth :caption 
+#+ATTR_HTML: :class fullwidth
 [[file:demo-2.jpg]]
 
 * Customization

@@ -16,7 +16,7 @@ I feel like being distracted by too many colors in code blocks, so the highlight
 
 * Screenshot
 
-see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here
+see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here and the [[https://zilongli.org/code/org-tufte-example.org][org]] file.
 
 [[file:example-1.jpg]]
 
