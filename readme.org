@@ -4,14 +4,21 @@ I really like the design of Edward Tufte’s books and handouts and its [[https:
 
 * Features
 - modern responsive html page.
-- use fast and powerful =katex= instead of =mathjax= to render math.
 - one command =M-x export-org-tufte-html= just give me what I want
+- use fast and powerful =katex= instead of =mathjax= to render math.
+- nice source code display by using =et-book-ligatures= font
 - just works without having any org options eg =#+html_head:=
 - disable full-width figures in default.
 
 * Customization
 
 I feel like being distracted by too many colors in code blocks, so the highlight of code block is not enabled. But you can get this feature by =(setq org-tufte-htmlize-code t)=
+
+* Screenshot
+
+[[file:demo-1.jpg]]
+
+[[file:demo-2.jpg]]
 
 * Credits
 some codes are copied from

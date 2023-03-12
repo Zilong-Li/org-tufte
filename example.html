@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="author" content="Zilong Li">
+<link rel="stylesheet" href="https://zilongli.org/code/normalize.css" type="text/css" />
+<link rel="stylesheet" href="https://zilongli.org/code/tufte.css" type="text/css" />
+<link rel="stylesheet" href="https://zilongli.org/code/htmlize.css" type="text/css" />
+<link rel="stylesheet" href="https://zilongli.org/code/org.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script></head>
+<body>
+<div id="body"><div id="container"><div id="content"><article><h1 class="title">Example of org-tufte</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc4483d1">1. Introduction to org mode</a></li>
+<li><a href="#org27ef073">2. Nice bits of org mode</a></li>
+<li><a href="#org14afa6a">3. Org Demo</a>
+<ul>
+<li><a href="#org5ad54c2">3.1. The ordered list</a></li>
+<li><a href="#orgfce0f33">3.2. Unordered list</a></li>
+<li><a href="#orgcc43453">3.3. Definition list</a></li>
+<li><a href="#orgeeb6d06">3.4. Inline Math</a></li>
+<li><a href="#orgebc1141">3.5. Math equation</a></li>
+<li><a href="#org69d2f3a">3.6. Unicode</a></li>
+<li><a href="#orge5afbbc">3.7. Table</a></li>
+<li><a href="#orgd95dcff">3.8. Picture</a></li>
+</ul>
+</li>
+<li><a href="#org5749e04">4. Customization</a></li>
+</ul>
+</div>
+</div>
+<section></section>
+
+<section><h2>Introduction to org mode</h2>
+<p>
+I quoted here
+</p>
+<div class="epigraph"><blockquote>
+<p>
+<a href="http://orgmode.org/">Org mode</a> is for keeping notes<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle"/><span class="sidenote">
+For note keeping, <a href="https://github.com/org-roam/org-roam">org-roam</a> is a mature solution for org-mode.
+</span>, maintaining TODO lists, planning projects,
+and authoring documents with a fast and effective <i>plain-text</i> system<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle"/><span class="sidenote">
+A <a href="http://doc.norang.ca/org-mode.html">great article</a> elaborates on this.
+</span>.
+</p>
+
+</blockquote></div>
+</section>
+
+<section><h2>Nice bits of org mode</h2>
+<p>
+As being member of Emacs cult, org-mode is a natural choice for note-taking, authoring, publishing and literate programming.
+</p>
+
+<ol class="org-ol">
+<li>authoring and publishing: org can be exported to various formats <i>TeX</i>, <i>PDF</i> and <i>HTML</i>. great for writers and academics.</li>
+<li>literate programming: <a href="https://orgmode.org/worg/org-contrib/babel/">org-babel</a> is more powerful than <a href="https://rmarkdown.rstudio.com/">rmarkdown</a>, <a href="https://quarto.org/">quarto</a>. nice for teaching and reproducible research.</li>
+<li>Get Tings Done.</li>
+<li>And so on.</li>
+</ol>
+</section>
+
+<section><h2>Org Demo</h2>
+<p>
+We use <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Lorem ipsum</a> text to demonstrate all elements you would expect to see in the org-exported HTML pages.
+</p>
+</section>
+
+<section><h3>The ordered list</h3>
+<ol class="org-ol">
+<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+<li>Donec et massa sit amet ligula maximus feugiat.</li>
+<li>Morbi consequat orci et tincidunt sagittis.</li>
+</ol>
+</section>
+
+<section><h3>Unordered list</h3>
+<ul class="org-ul">
+<li>Aliquam non metus nec elit pellentesque scelerisque.</li>
+<li>In accumsan nunc ac orci varius hendrerit.</li>
+<li>Suspendisse non eros eu nisi finibus maximus.</li>
+</ul>
+</section>
+
+<section><h3>Definition list</h3>
+<dl class="org-dl">
+<dt>Lorem ipsum</dt><dd>dolor sit amet, consectetur adipiscing elit.  Mauris laoreet
+sollicitudin venenatis.  Duis sed consequat dolor.</dd>
+<dt>Etiam feugiat</dt><dd>pharetra sapien et semper.  Nunc ornare lacus sit amet massa
+auctor, vitae aliquam eros interdum.  Mauris arcu ante, imperdiet vel purus
+ac, bibendum faucibus diam.  Ut blandit nec mi at ultricies.  Donec eget
+mattis nisl.  In sed nibh felis.  Cras quis convallis orci.</dd>
+<dt>Sed aliquam</dt><dd>odio sed faucibus aliquam, arcu augue elementum justo, ut
+vulputate ligula sem in augue.  Maecenas ante felis, pellentesque auctor
+semper non, eleifend quis ante.  Fusce enim orci, suscipit ac dapibus et,
+fermentum eu tortor.  Duis in facilisis ante, quis faucibus dolor.  Etiam
+maximus lorem quis accumsan vehicula.</dd>
+</dl>
+</section>
+
+<section><h3>Inline Math</h3>
+<p>
+\[ \mathcal{F}(a) = \frac{1}{2\pi i}\oint_\gamma \frac{f(z)}{z - a}\,dz \]
+</p>
+
+<p>
+\[ \int_D (\nabla\cdot \mathcal{F})\,dV =\int_{\partial D}\mathcal{F}\cdot n\, dS \]
+</p>
+</section>
+
+<section><h3>Math equation</h3>
+\begin{align}
+\mathcal{F}(a) &= \frac{1}{2\pi i}\oint_\gamma \frac{f(z)}{z - a}\,dz\\
+\int_D (\nabla\cdot \mathcal{F})\,dV &=\int_{\partial D}\mathcal{F}\cdot n\, dS
+\end{align}
+</section>
+
+<section><h3>Unicode</h3>
+<p>
+Julia has native unicode support so that the code itself just looks like greek symbol. nice for mathematic writing.
+</p>
+
+<pre class="code"><code><span class="org-function-name">&#961;</span>(i, s, z) = sum(&#945;[i, s, z, :] <span class="org-type">.*</span> &#946;[i, s, z, :]) <span class="org-type">/</span> L[i]
+<span class="org-function-name">&#961;</span>(i, s) = map(z <span class="org-type">-&gt;</span> &#961;(i, s, z), <span class="org-highlight-numbers-number">1</span>:size(&#945;)[<span class="org-highlight-numbers-number">3</span>])
+<span class="org-function-name">&#954;</span>(i, s, z, k; Q, F, &#961;, h) = &#961;[z] <span class="org-type">*</span> Q[i, k] <span class="org-type">*</span> F[z, s, k] <span class="org-type">/</span> h[z]
+<span class="org-function-name">&#954;</span>(i, s; Q, F, &#961;, h) = <span class="org-keyword">begin</span>
+   C&#215;K = product(<span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">1</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">3</span>])
+   map(((z, k),) <span class="org-type">-&gt;</span> &#954;(i, s, z, k; Q=Q, F=F, &#961;=&#961;, h=h), C&#215;K)
+<span class="org-keyword">end</span>
+<span class="org-function-name">w</span>(i, s, z1, z2, k1, k2; Q, F) =
+    Q[i, k1] <span class="org-type">*</span> F[z1, s, k1] <span class="org-type">*</span> Q[i, k2] <span class="org-type">*</span> F[z2, s, k2] <span class="org-type">*</span>
+    &#945;[i, s, z1, z2] <span class="org-type">*</span> &#946;[i, s, z1, z2] <span class="org-type">/</span> L[i]
+<span class="org-function-name">w</span>(i, s; Q, F, &#945;, &#946;) = <span class="org-keyword">begin</span>
+    CxCxKxK = product(<span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">1</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">1</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">3</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">3</span>])
+    map(((z1, z2, k1, k2),) <span class="org-type">-&gt;</span> w(i, s, z1, z2, k1, k2; Q=Q, F=F), CxCxKxK)
+<span class="org-keyword">end</span>
+<span class="org-function-name">&#957;</span>(i, s, z1, z2, k1, k2; Q, F, h) =
+    &#945;[i, s, z1, z2] <span class="org-type">*</span> &#946;[i, s, z1, z2] <span class="org-type">/</span> L[i] <span class="org-type">*</span>
+    Q[i, k1] <span class="org-type">*</span> F[z1, s, k1] <span class="org-type">/</span> h[z1] <span class="org-type">*</span>
+    Q[i, k2] <span class="org-type">*</span> F[z2, s, k2] <span class="org-type">/</span> h[z2]
+<span class="org-function-name">&#957;</span>(i, s; Q, F, h) = <span class="org-keyword">begin</span>
+    CxCxKxK = product(<span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">1</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">1</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">3</span>], <span class="org-highlight-numbers-number">1</span>:size(F)[<span class="org-highlight-numbers-number">3</span>])
+    map(((z1, z2, k1, k2),) <span class="org-type">-&gt;</span> &#957;(i, s, z1, z2, k1, k2; Q=Q, F=F, h=h), CxCxKxK)
+<span class="org-keyword">end</span>
+</code></pre>
+</section>
+
+<section><h3>Table</h3>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Table Caption</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(N\)</th>
+<th scope="col" class="org-right">\(N^2\)</th>
+<th scope="col" class="org-right">\(N^3\)</th>
+<th scope="col" class="org-right">\(N^4\)</th>
+<th scope="col" class="org-right">\(\sqrt n\)</th>
+<th scope="col" class="org-right">\(\sqrt[4]N\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">4</td>
+<td class="org-right">8</td>
+<td class="org-right">16</td>
+<td class="org-right">1.4142</td>
+<td class="org-right">1.1892</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-right">9</td>
+<td class="org-right">27</td>
+<td class="org-right">81</td>
+<td class="org-right">1.7321</td>
+<td class="org-right">1.3161</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+<section><h3>Picture</h3>
+
+<div id="org18c15cd" class="figure">
+<p><img src="demo-1.jpg" alt="demo-1.jpg" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Demo Picture in default</p>
+</div>
+
+
+<div id="org1c665a6" class="figure">
+<p><img src="demo-2.jpg" alt="demo-2.jpg" class="fullwidth" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Demo Picture in full-wide</p>
+</div>
+</section>
+
+<section><h2>Customization</h2>
+<p>
+Source code highlighting
+</p>
+<pre class="code"><code><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">require</span> <span class="org-highlight-quoted-quote">'</span><span class="org-constant">org-tufte</span><span class="org-rainbow-delimiters-depth-1">)</span>
+<span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">setq</span> <span class="org-variable-name">org-tufte-htmlize-code</span> t<span class="org-rainbow-delimiters-depth-1">)</span>
+</code></pre>
+</section>
+<!-- Footnotes --><!-- 
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+For note keeping, <a href="https://github.com/org-roam/org-roam">org-roam</a> is a mature solution for org-mode.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+A <a href="http://doc.norang.ca/org-mode.html">great article</a> elaborates on this.
+</p></div></div>
+
+ --></article></div></div></div>
+        </script>
+   </body>
+</html>
