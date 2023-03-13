@@ -1,6 +1,6 @@
 #+title: Org file to beautiful Tufte html with one command
 
-I really like the design of Edward Tufte’s books and handouts and its [[https://edwardtufte.github.io/tufte-css/][css]]. However, there is no single command for just exporting a org file to the Tufte-like html for lazy people like me or newbie who don't know too much about org mode setups. Although there is [[https://github.com/dakrone/ox-tufte][ox-tufte]] intending to do the job, the css and html template is not totally compatible and not responsive on mobile device, and it's hard to use for newbie. Based on my own taste, I added some nice features.
+I really like the design of Edward Tufte’s handouts and the [[https://edwardtufte.github.io/tufte-css/][css]]. However, there is no single command for just exporting a org file to the Tufte-like html for lazy people like me or newbie who don't know too much about org mode setups. Although there is [[https://github.com/dakrone/ox-tufte][ox-tufte]] intending to do the job, the css and html template is not totally compatible with org output and not responsive on mobile device. The configuration makes it hard to use for newbie. Based on my own taste, I added some nice features.
 
 * Features
 - modern responsive html page.
@@ -35,15 +35,15 @@ Just fetch [[file:org-tufte.el]] and save it somewhere. Then load it
 
 * Customization
 
-I feel like being distracted by too many colors when reading blogs. Although the highlight of code block is not enabled, you can get this feature by =(setq org-tufte-htmlize-code t)=
+I feel being distracted by too many colors when reading blogs. Although the highlight of code block is not enabled, you can get this feature by =(setq org-tufte-htmlize-code t)=
 
 * Screenshot
 
 see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here and the [[https://zilongli.org/code/org-tufte-example.org][org]] file.
 
 [[file:example-1.jpg]]
-
 [[file:example-2.jpg]]
+[[file:example-3.jpg]]
 
 * Credits
 some codes are copied from

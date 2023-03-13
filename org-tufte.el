@@ -23,6 +23,9 @@
 (require 'ox)
 (require 'ox-html)
 
+;;; disable heading's number
+(setq org-export-with-section-numbers nil)
+
 ;;; User-Configurable Variables
 
 (defgroup org-tufte-export nil
@@ -75,6 +78,48 @@
                      (item . org-html-item)))
 
 ;;; Transcode Functions
+
+(defun org-tufte-modern-html-template (contents info)
+  (concat
+   "<!DOCTYPE html>\n"
+   (format "<html lang=\"%s\">\n" (plist-get info :language))
+   "<head>\n"
+   (format "<meta charset=\"%s\">\n"
+           (coding-system-get org-html-coding-system 'mime-charset))
+   "<meta name=\"viewport\" content=\"width=device-width\">\n"
+   (format "<meta name=\"author\" content=\"%s\">\n"
+           (org-export-data (plist-get info :author) info))
+   "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/normalize.css\" type=\"text/css\" />\n"
+   "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/tufte.css\" type=\"text/css\" />\n"
+   (when org-tufte-htmlize-code
+     (format "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/htmlize.css\" type=\"text/css\" />\n"))
+   "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/org.css\" type=\"text/css\" />\n"
+   org-tufte-katex-template
+   "</head>\n"
+   "<body>\n"
+   "<div id=\"body\"><div id=\"container\">"
+   "<div id=\"content\"><article>"
+   (format "<h1 class=\"title\">%s</h1>\n"
+           (org-export-data (or (plist-get info :title) "") info))
+   (when (plist-get info :date)
+     (format "<div class=\"info\">Posted on %s</div>\n"
+             (car (plist-get info :date))))
+   contents
+   "</article></div></div></div>
+        </script>
+   </body>\n"
+   "</html>\n"))
+
+(defun org-tufte-modern-html-section (section contents info)
+  (concat
+   "<section>"
+   contents
+   "</section>\n"))
+
+
+(defun org-tufte-modern-html-headline (headline contents info)
+  contents)
+
 
 (defun org-tufte-quote-block (quote-block contents info)
   "Transform a quote block into an epigraph in Tufte HTML style"
@@ -151,47 +196,6 @@ link. INFO is a plist holding contextual information."
 is nil. INFO is a plist used as a communication channel."
   (format "<pre class=\"code\"><code>%s</code></pre>"
           (org-html-format-code src-block info)))
-
-(defun org-tufte-modern-html-template (contents info)
-  (concat
-   "<!DOCTYPE html>\n"
-   (format "<html lang=\"%s\">\n" (plist-get info :language))
-   "<head>\n"
-   (format "<meta charset=\"%s\">\n"
-           (coding-system-get org-html-coding-system 'mime-charset))
-   "<meta name=\"viewport\" content=\"width=device-width\">\n"
-   (format "<meta name=\"author\" content=\"%s\">\n"
-           (org-export-data (plist-get info :author) info))
-   "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/normalize.css\" type=\"text/css\" />\n"
-   "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/tufte.css\" type=\"text/css\" />\n"
-   (when org-tufte-htmlize-code
-     (format "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/htmlize.css\" type=\"text/css\" />\n"))
-   "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/org.css\" type=\"text/css\" />\n"
-   org-tufte-katex-template
-   "</head>\n"
-   "<body>\n"
-   "<div id=\"body\"><div id=\"container\">"
-   "<div id=\"content\"><article>"
-   (format "<h1 class=\"title\">%s</h1>\n"
-           (org-export-data (or (plist-get info :title) "") info))
-   (when (plist-get info :date)
-     (format "<div class=\"info\">Posted on %s</div>\n"
-             (car (plist-get info :date))))
-   contents
-   "</article></div></div></div>
-        </script>
-   </body>\n"
-   "</html>\n"))
-
-(defun org-tufte-modern-html-section (section contents info)
-  (concat
-   "<section>"
-   contents
-   "</section>\n"))
-
-
-(defun org-tufte-modern-html-headline (headline contents info)
-  contents)
 
 ;;; Export functions
 
