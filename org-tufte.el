@@ -4,10 +4,10 @@
 ;;
 ;; Author: Zilong Li <zilong.dk@gmail.com>
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
-;; Created: March 08, 2023
-;; Modified: March 08, 2023
-;; Version: 0.0.1
-;; Keywords: abbrev bib c calendar comm convenience data docs emulations extensions faces files frames games hardware help hypermedia i18n internal languages lisp local maint mail matching mouse multimedia news outlines processes terminals tex tools unix vc wp
+;; Created: March 14, 2023
+;; Modified: March 14, 2023
+;; Version: 0.1.0
+;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
 ;; Package-Requires: ((emacs "24.4"))
 ;;
