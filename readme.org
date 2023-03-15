@@ -1,14 +1,14 @@
 #+title: Org file to beautiful Tufte html with one command
 
-I really like the design of Edward Tufte’s handouts. However, there is no single command for just exporting a org file to the Tufte-like html for lazy people like me or newbie who don't know too much about org mode setups. Although there is [[https://github.com/dakrone/ox-tufte][ox-tufte]] intending to do the job, it didn't solve that the org-exported html template is not totally compatible with the [[https://edwardtufte.github.io/tufte-css/][Tufte CSS]] and the generated page is not responsive on mobile device. Also, its configuration makes it hard to use for newbie. Based on my own taste, I added some nice features by tweaking the html template and curating my own CSS. see https://zilongli.org/code/tufte.css, https://zilongli.org/code/org.css.
+I really like the design of Edward Tufte’s handouts. However, there is no single command for just exporting a org file to the Tufte-like html for lazy people like me or newbie who don't know too much about org mode setups. Although there is [[https://github.com/dakrone/ox-tufte][ox-tufte]] intending to do the job, it didn't solve that the org-exported html template is not totally compatible with the [[https://edwardtufte.github.io/tufte-css/][Tufte CSS]] and the generated page is not responsive on mobile device. Also, its configuration makes it hard to use for newbie. Based on my own taste, I added some nice features by tweaking the html template and curating [[https://zilongli.org/code/org.css][my CSS]].
 
 * Features
-- modern responsive html page powered by curated CSS.
+- modern responsive html page.
+- embeded image in exported html so that its self-contained!
 - one command =M-x export-org-tufte-html= just give me what I want
 - use fast and powerful =katex= instead of =mathjax= to render math.
 - nice source code display by using =et-book-ligatures= font
-- just works without having any org options eg =#+html_head:=
-- disable full-width figures in default.
+- just works without having any org options, eg. =#+html_head:=
 
 * Installation
 
@@ -45,6 +45,14 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 [[file:example-4.jpg]]
 [[file:example-3.jpg]]
 [[file:example-2.jpg]]
+
+* Changelog
+
+** v0.2.0
+- embed images in html!
+
+** v0.1.0
+- first release
 
 * Credits
 some codes are copied from

@@ -231,14 +231,22 @@ non-nil."
     (org-export-to-buffer 'tufte-html "*Org Tufte Export*"
       async subtreep visible-only nil nil (lambda () (text-mode)))))
 
+;;; https://emacs.stackexchange.com/questions/27060/embed-image-as-base64-on-html-export-from-orgmode
+;;; https://niklasfasching.de/posts/org-html-export-inline-images
+;;; don't use url-insert-file-contents. instead use insert-file-contents
+(defun org-tufte-format-image-inline (source attributes info)
+  (let* ((ext (file-name-extension source))
+         (prefix (if (string= "svg" ext) "data:image/svg+xml;base64," "data:;base64,"))
+         (data (with-temp-buffer (insert-file-contents source) (buffer-string)))
+         (data-url (concat prefix (base64-encode-string data)))
+         (attributes (org-combine-plists `(:src ,data-url) attributes)))
+    (org-html-close-tag "img" (org-html--make-attribute-string attributes) info)))
+
 ;;;###autoload
 (defun org-tufte-export-to-file (&optional async subtreep visible-only)
   "Export current buffer to a Tufte HTML file.
-
 If narrowing is active in the current buffer, only export its
-narrowed part.
-
-If a region is active, export that region.
+narrowed part. If a region is active, export that region.
 
 A non-nil optional argument ASYNC means the process should happen
 asynchronously.  The resulting file should be accessible through
@@ -250,16 +258,16 @@ first.
 
 When optional argument VISIBLE-ONLY is non-nil, don't export
 contents of hidden elements.
-
 Return output file's name."
   (interactive)
-  (let ((outfile (org-export-output-file-name ".html" subtreep))
-        ;; need to bind this because tufte treats footnotes specially, so we
-        ;; don't want to display them at the bottom
-        (org-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
-                                        org-html-footnotes-section
-                                      "<!-- %s --><!-- %s -->")))
-    (org-export-to-file 'tufte-html outfile async subtreep visible-only)))
+  (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline))
+    (let ((outfile (org-export-output-file-name ".html" subtreep))
+          ;; need to bind this because tufte treats footnotes specially, so we
+          ;; don't want to display them at the bottom
+          (org-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
+                                          org-html-footnotes-section
+                                        "<!-- %s --><!-- %s -->")))
+      (org-export-to-file 'tufte-html outfile async subtreep visible-only))))
 
 ;;; publishing function
 
