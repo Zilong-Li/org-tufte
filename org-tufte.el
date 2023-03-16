@@ -6,7 +6,7 @@
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
 ;; Created: March 14, 2023
 ;; Modified: March 14, 2023
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
 ;; Package-Requires: ((emacs "24.4"))
@@ -42,6 +42,11 @@
   "Katex api as backend."
   :group 'org-export-html
   :type 'string)
+
+(defcustom org-tufte-embed-images t
+  "Non-nil will embed images in html such that the page is self-contained!"
+  :group 'org-tufte-export
+  :type 'boolean)
 
 (defcustom org-tufte-htmlize-code nil
   "Non-nil will htmlize src code when exporting to html."
@@ -106,7 +111,6 @@
              (car (plist-get info :date))))
    contents
    "</article></div></div></div>
-        </script>
    </body>\n"
    "</html>\n"))
 
@@ -260,13 +264,15 @@ When optional argument VISIBLE-ONLY is non-nil, don't export
 contents of hidden elements.
 Return output file's name."
   (interactive)
-  (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline))
-    (let ((outfile (org-export-output-file-name ".html" subtreep))
-          ;; need to bind this because tufte treats footnotes specially, so we
-          ;; don't want to display them at the bottom
-          (org-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
-                                          org-html-footnotes-section
-                                        "<!-- %s --><!-- %s -->")))
+  (let ((outfile (org-export-output-file-name ".html" subtreep))
+        ;; need to bind this because tufte treats footnotes specially, so we
+        ;; don't want to display them at the bottom
+        (org-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
+                                        org-html-footnotes-section
+                                      "<!-- %s --><!-- %s -->")))
+    (if org-tufte-embed-images
+        (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline))
+          (org-export-to-file 'tufte-html outfile async subtreep visible-only))
       (org-export-to-file 'tufte-html outfile async subtreep visible-only))))
 
 ;;; publishing function

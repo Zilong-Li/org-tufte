@@ -4,7 +4,7 @@ I really like the design of Edward Tufte’s handouts. However, there is no sing
 
 * Features
 - modern responsive html page.
-- embeded image in exported html so that its self-contained!
+- embed image in exported html so that its self-contained!
 - one command =M-x export-org-tufte-html= just give me what I want
 - use fast and powerful =katex= instead of =mathjax= to render math.
 - nice source code display by using =et-book-ligatures= font
@@ -35,7 +35,19 @@ Just fetch [[file:org-tufte.el]] and save it somewhere. Then load it
 
 * Customization
 
-I feel being distracted by too many colors when reading blogs. Although the highlight of code block is not enabled, you can get this feature by =(setq org-tufte-htmlize-code t)=
+** highlighting source code
+I feel being distracted by too many colors when reading blogs. Although the highlight of code block is not enabled, you can get this feature by the following configuration.
+
+#+begin_src emacs-lisp
+(setq org-tufte-htmlize-code t)
+#+end_src
+
+** embedding images in html
+The default org html-export does not embed images, which you have to send archives to include images when you want to share you html page to other people. I feel it is very convenient to just share a single self-contained html, so =org-tufte= enables embedding images in html by default. If you don't like it, you can disable it by the following configuration.
+
+#+begin_src emacs-lisp
+(setq org-tufte-embed-images nil)
+#+end_src
 
 * Screenshot
 
