@@ -60,6 +60,9 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 
 * Changelog
 
+** v0.3.0
+- show date and author under title if =#+date:= is defined
+
 ** v0.2.0
 - embed images in html!
 

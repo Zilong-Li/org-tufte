@@ -107,8 +107,11 @@
    (format "<h1 class=\"title\">%s</h1>\n"
            (org-export-data (or (plist-get info :title) "") info))
    (when (plist-get info :date)
-     (format "<div class=\"info\">Posted on %s</div>\n"
-             (car (plist-get info :date))))
+     (concat (format "<div class=\"info\">Posted on %s "
+             (org-export-data (plist-get info :date) info))
+     (format "by <i>%s</i> </div>\n"
+             (org-export-data (plist-get info :author) info)))
+     )
    contents
    "</article></div></div></div>
    </body>\n"
