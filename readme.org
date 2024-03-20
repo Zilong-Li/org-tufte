@@ -9,6 +9,7 @@ I really like the design of Edward Tufte’s handouts. However, there is no sing
 - use fast and powerful =katex= instead of =mathjax= to render math.
 - nice source code display by using =et-book-ligatures= font
 - just works without having any org options, eg. =#+html_head:=
+- go to top of page 
 
 * Installation
 
@@ -59,6 +60,8 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 [[file:example-2.jpg]]
 
 * Changelog
+** v0.4.0
+- add button to go to top of page [fn:1]
 
 ** v0.3.0
 - show date and author under title if =#+date:= is defined
@@ -68,6 +71,9 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 
 ** v0.1.0
 - first release
+
+* Footnotes
+[fn:1] user can custmoize this
 
 * Credits
 some codes are copied from
