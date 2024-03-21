@@ -115,7 +115,7 @@
    contents
    "</article>
     <div style=\"margin-right:-15%; width:50%; float:right;\"><a href=\"#top\"  title=\"Go to Top\" style=\"visibility: visible; opacity: 1;\">
-    <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"18\" width=\"38\" viewBox=\"0 0 12 6\" fill=\"#fc6b03\"><path d=\"M12 6H0l6-6z\"></path></svg>
+    <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"15\" width=\"30\" viewBox=\"0 0 12 6\" fill=\"#fcba03\" stroke=\"#fc6b03\"><path d=\"M12 6H0l6-6z\"></path></svg>
     </a></div>
    <footer class=\"footer\"><span>Powered by <a href=\"https://github.com/Zilong-Li/org-tufte\" rel=\"noopener\">Emacs Org-tufte</a></span></footer>
    </div></div> </div></body>\n"
