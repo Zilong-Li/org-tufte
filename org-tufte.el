@@ -5,8 +5,8 @@
 ;; Author: Zilong Li <zilong.dk@gmail.com>
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
 ;; Created: March 14, 2023
-;; Modified: March 14, 2023
-;; Version: 0.2.0
+;; Modified: April 14, 2024
+;; Version: 0.5.0
 ;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
 ;; Package-Requires: ((emacs "24.4"))
@@ -14,8 +14,6 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; Commentary:
-;;  blabla
-;;
 ;;
 ;;; Code:
 
@@ -50,6 +48,11 @@
 
 (defcustom org-tufte-htmlize-code nil
   "Non-nil will htmlize src code when exporting to html."
+  :group 'org-tufte-export
+  :type 'boolean)
+
+(defcustom org-tufte-goto-top-button nil
+  "Non-nil will add go-to-top button in the html."
   :group 'org-tufte-export
   :type 'boolean)
 
@@ -119,13 +122,14 @@
                      (org-export-data (plist-get info :author) info)))
      )
    contents
-   "</article>
-    <div style=\"margin-right:-15%; width:50%; float:right;\"><a href=\"#top\"  title=\"Go to Top\" style=\"visibility: visible; opacity: 1;\">
+   "</article>"
+   (when org-tufte-goto-top-button
+     "<div style=\"margin-right:-15%; width:50%; float:right;\"><a href=\"#top\"  title=\"Go to Top\" style=\"visibility: visible; opacity: 1;\">
     <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"15\" width=\"30\" viewBox=\"0 0 12 6\" fill=\"#fcba03\" stroke=\"#fc6b03\"><path d=\"M12 6H0l6-6z\"></path></svg>
-    </a></div>
-   <footer class=\"footer\"><span>Powered by <a href=\"https://github.com/Zilong-Li/org-tufte\" rel=\"noopener\">Emacs Org-tufte</a></span></footer>
-   </div></div> </div></body>\n"
-   "</html>\n"))
+    </a></div>")
+   "<footer class=\"footer\"><span>Powered by <a href=\"https://github.com/Zilong-Li/org-tufte\" rel=\"noopener\">Emacs Org-tufte</a></span></footer>
+   </div></div></div></body></html>\n"
+   ))
 
 (defun org-tufte-modern-html-section (section contents info)
   (concat
@@ -307,7 +311,8 @@ Return output file's name."
         (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline)
                   ((symbol-function 'org-html--wrap-image) 'org-tufte-html-wrap-image))
           (org-export-to-file 'tufte-html outfile async subtreep visible-only))
-      (org-export-to-file 'tufte-html outfile async subtreep visible-only))))
+      (cl-letf (((symbol-function 'org-html--wrap-image) 'org-tufte-html-wrap-image))
+        (org-export-to-file 'tufte-html outfile async subtreep visible-only)))))
 
 ;;; publishing function
 

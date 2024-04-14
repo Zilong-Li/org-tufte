@@ -27,10 +27,12 @@ Just fetch [[file:org-tufte.el]] and save it somewhere. Then load it
 #+begin_src emacs-lisp
 (use-package org-tufte
   :ensure nil
-  :init (add-to-list 'load-path "PATH*")
+  :load-path "PATH"
   :config
-  (require 'org-tufte)
-  (setq org-tufte-htmlize-code t)
+  (setq org-tufte-htmlize-code t  ;; htmlize and beautify source code!
+        org-tufte-embed-images nil ;; do not embed images. faster!
+        org-tufte-goto-top-button t ;; add go-to-top button in html
+        )
   )
 #+end_src
 
@@ -44,7 +46,13 @@ I feel being distracted by too many colors when reading blogs. Although the high
 #+end_src
 
 ** embedding images in html
-The default org html-export does not embed images, which you have to send archives to include images when you want to share you html page to other people. I feel it is very convenient to just share a single self-contained html, so =org-tufte= enables embedding images in html by default. If you don't like it, you can disable it by the following configuration.
+The default org html-export does not embed images. Hence, you have
+to send archives including images when you share your html page to
+other people. I feel it is very convenient to just share a single
+self-contained html, so =org-tufte= enables embedding images in html
+by default. But it may be a bit *slow* if there are too many large
+images. If you don't like it, you can disable it by the following
+configuration.
 
 #+begin_src emacs-lisp
 (setq org-tufte-embed-images nil)
@@ -60,18 +68,18 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 [[file:example-2.jpg]]
 
 * Changelog
+** v0.5.0
+- Make figure caption a marginnote. [[https://github.com/Zilong-Li/org-tufte/pull/5][#5]]
+- New option: ~org-tufte-posted-string~. [[https://github.com/Zilong-Li/org-tufte/pull/4][#4]]
+- New option: ~org-tufte-goto-top-button~.
 ** v0.4.0
 - add button to go to top of page [fn:1]
-
 ** v0.3.0
 - show date and author under title if =#+date:= is defined
-
 ** v0.2.0
 - embed images in html!
-
 ** v0.1.0
 - first release
-
 * Footnotes
 [fn:1] user can custmoize this
 
