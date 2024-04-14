@@ -277,7 +277,7 @@ arguments CAPTION and LABEL are given, use them for caption and
 	    ;; Caption.
 	    (if (not (org-string-nw-p caption)) ""
 	      (format (if html5-fancy "\n<figcaption>%s</figcaption>"
-	                "\n<span class=\"marginnote\">%s</span>")
+	                "\n<label for=\"mn-exports-imports\" class=\"margin-toggle\">⊕</label><input type=\"checkbox\" id=\"mn-exports-imports\" class=\"margin-toggle\"><span class=\"marginnote\">%s</span>")
 	              caption))
 	    ;; Contents.
 	    (if html5-fancy contents (format "%s</p>" contents))
