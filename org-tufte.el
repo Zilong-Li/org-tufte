@@ -254,7 +254,7 @@ non-nil."
     (org-html-close-tag "img" (org-html--make-attribute-string attributes) info)))
 
 
-(defun my/org-tufte-html--wrap-image (contents info &optional caption label)
+(defun org-tufte-html-wrap-image (contents info &optional caption label)
   "Wrap CONTENTS string within an appropriate environment for images.
 INFO is a plist used as a communication channel.  When optional
 arguments CAPTION and LABEL are given, use them for caption and
@@ -299,7 +299,7 @@ Return output file's name."
                                       "<!-- %s --><!-- %s -->")))
     (if org-tufte-embed-images
         (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline)
-                  ((symbol-function 'org-html--wrap-image) 'my/org-tufte-html--wrap-image))
+                  ((symbol-function 'org-html--wrap-image) 'org-tufte-html-wrap-image))
           (org-export-to-file 'tufte-html outfile async subtreep visible-only))
       (org-export-to-file 'tufte-html outfile async subtreep visible-only))))
 
