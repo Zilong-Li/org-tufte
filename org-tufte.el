@@ -253,6 +253,26 @@ non-nil."
          (attributes (org-combine-plists `(:src ,data-url) attributes)))
     (org-html-close-tag "img" (org-html--make-attribute-string attributes) info)))
 
+
+(defun my/org-tufte-html--wrap-image (contents info &optional caption label)
+  "Wrap CONTENTS string within an appropriate environment for images.
+INFO is a plist used as a communication channel.  When optional
+arguments CAPTION and LABEL are given, use them for caption and
+\"id\" attribute."
+  (let ((html5-fancy (org-html--html5-fancy-p info)))
+    (format (if html5-fancy "\n<figure%s><p>\n%s%s\n</figure>"
+	      "\n<div%s class=\"figure\"><p>\n%s%s\n</div>")
+	    ;; ID.
+	    (if (org-string-nw-p label) (format " id=\"%s\"" label) "")
+	    ;; Caption.
+	    (if (not (org-string-nw-p caption)) ""
+	      (format (if html5-fancy "\n<figcaption>%s</figcaption>"
+	                "\n<span class=\"marginnote\">%s</span>")
+	              caption))
+	    ;; Contents.
+	    (if html5-fancy contents (format "%s</p>" contents))
+            )))
+
 ;;;###autoload
 (defun org-tufte-export-to-file (&optional async subtreep visible-only)
   "Export current buffer to a Tufte HTML file.
@@ -278,7 +298,8 @@ Return output file's name."
                                         org-html-footnotes-section
                                       "<!-- %s --><!-- %s -->")))
     (if org-tufte-embed-images
-        (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline))
+        (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline)
+                  ((symbol-function 'org-html--wrap-image) 'my/org-tufte-html--wrap-image))
           (org-export-to-file 'tufte-html outfile async subtreep visible-only))
       (org-export-to-file 'tufte-html outfile async subtreep visible-only))))
 
