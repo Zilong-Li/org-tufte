@@ -68,6 +68,8 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 [[file:example-2.jpg]]
 
 * Changelog
+** v0.6.0
+- Make ~export-org-tufte-html~ command as function
 ** v0.5.0
 - Make figure caption a marginnote. [[https://github.com/Zilong-Li/org-tufte/pull/5][#5]]
 - New option: ~org-tufte-posted-string~. [[https://github.com/Zilong-Li/org-tufte/pull/4][#4]]

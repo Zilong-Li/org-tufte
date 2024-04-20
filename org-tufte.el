@@ -6,7 +6,7 @@
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
 ;; Created: March 14, 2023
 ;; Modified: April 14, 2024
-;; Version: 0.5.0
+;; Version: 0.6.0
 ;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
 ;; Package-Requires: ((emacs "24.4"))
@@ -333,9 +333,10 @@ Return output file name."
 
 ;;; export command
 
-(fset 'export-org-tufte-html
-      (kmacro-lambda-form [?\C-c ?\C-e ?T ?o] 0 "%d"))
-
+(defun export-org-tufte-html ()
+  "Export org file to Tufte-like html and open it"
+  (interactive)
+  (org-open-file (org-tufte-export-to-file)))
 
 (provide 'org-tufte)
 ;;; org-tufte.el ends here
