@@ -6,10 +6,10 @@
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
 ;; Created: March 14, 2023
 ;; Modified: April 14, 2024
-;; Version: 0.6.0
+;; Version: 0.7.0
 ;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((org "9.5") (emacs "27.1"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -17,7 +17,6 @@
 ;;
 ;;; Code:
 
-(require 's)
 (require 'ox)
 (require 'ox-html)
 
@@ -30,8 +29,7 @@
   "Options specific to Tufte export back-end."
   :tag "Org Tufte"
   :group 'org-export
-  :version "24.4"
-  :package-version '(Org . "8.0"))
+  :package-version '(Org . "9.5"))
 
 (defcustom org-tufte-katex-template "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css\" integrity=\"sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0\" crossorigin=\"anonymous\">
 <script defer src=\"https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js\" integrity=\"sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4\" crossorigin=\"anonymous\"></script>
@@ -69,18 +67,24 @@
   :group 'org-tufte-export
   :type 'string)
 
+(defcustom org-tufte-html-footnotes-section "<!-- %s --><!-- %s -->"
+  "Disable footnotes at the bottom"
+  :group 'org-tufte-export
+  :type 'string)
+
 ;;; Define Back-End
 
 (org-export-define-derived-backend 'tufte-html 'html
   :menu-entry
   '(?T "Export to Tufte-HTML"
-    ((?T "To temporary buffer"
-         (lambda (a s v b) (org-tufte-export-to-buffer a s v)))
-     (?t "To file" (lambda (a s v b) (org-tufte-export-to-file a s v)))
-     (?o "To file and open"
-         (lambda (a s v b)
-           (if a (org-tufte-export-to-file t s v)
-             (org-open-file (org-tufte-export-to-file nil s v)))))))
+       ((?T "To temporary buffer" org-tufte-export-to-buffer)
+        (?t "To file" org-tufte-export-to-html)
+        (?o "To file and open"
+            (lambda (a s v b)
+              (if a (org-tufte-export-to-html t s v b)
+                (org-open-file (org-tufte-export-to-html nil s v b)))))))
+  :options-alist
+  '((:html-footnotes-section nil nil org-tufte-html-footnotes-section))
   :translate-alist '((footnote-reference . org-tufte-footnote-reference)
                      (src-block . org-tufte-src-block)
                      (link . org-tufte-maybe-margin-note-link)
@@ -88,7 +92,8 @@
                      (verse-block . org-tufte-verse-block)
                      (template . org-tufte-modern-html-template)
                      (section . org-tufte-modern-html-section)
-                     (item . org-html-item)))
+                     (paragraph . org-tufte-html-paragraph)
+                     ))
 
 ;;; Transcode Functions
 
@@ -122,12 +127,15 @@
                      (org-export-data (plist-get info :author) info)))
      )
    contents
-   "</article>"
+   "</article>\n"
    (when org-tufte-goto-top-button
-     "<div style=\"margin-right:-15%; width:50%; float:right;\"><a href=\"#top\"  title=\"Go to Top\" style=\"visibility: visible; opacity: 1;\">
-    <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"15\" width=\"30\" viewBox=\"0 0 12 6\" fill=\"#fcba03\" stroke=\"#fc6b03\"><path d=\"M12 6H0l6-6z\"></path></svg>
-    </a></div>")
-   "<footer class=\"footer\"><span>Powered by <a href=\"https://github.com/Zilong-Li/org-tufte\" rel=\"noopener\">Emacs Org-tufte</a></span></footer>
+     "<div style=\"margin-right:-15%; width:50%; float:right;\">
+     <a href=\"#top\"  title=\"Go to Top\" style=\"visibility: visible; opacity: 0.5;\">
+    <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"15\" width=\"30\" viewBox=\"0 0 12 6\" fill=\"#f57627\" stroke=\"none\">
+    <path d=\"M12 6H0l6-6z\"></path></svg> </a></div>\n")
+   "<footer class=\"footer\">
+    <span>Powered by <a href=\"https://github.com/Zilong-Li/org-tufte\" rel=\"noopener\">Emacs Org-tufte</a></span>
+   </footer>
    </div></div></div></body></html>\n"
    ))
 
@@ -218,40 +226,6 @@ is nil. INFO is a plist used as a communication channel."
   (format "<pre class=\"code\"><code>%s</code></pre>"
           (org-html-format-code src-block info)))
 
-;;; Export functions
-
-;;;###autoload
-(defun org-tufte-export-to-buffer (&optional async subtreep visible-only)
-  "Export current buffer to a Tufte HTML buffer.
-
-If narrowing is active in the current buffer, only export its
-narrowed part.
-
-If a region is active, export that region.
-
-A non-nil optional argument ASYNC means the process should happen
-asynchronously.  The resulting buffer should be accessible
-through the `org-export-stack' interface.
-
-When optional argument SUBTREEP is non-nil, export the sub-tree
-at point, extracting information from the headline properties
-first.
-
-When optional argument VISIBLE-ONLY is non-nil, don't export
-contents of hidden elements.
-
-Export is done in a buffer named \"*Org Tufte Export*\", which will
-be displayed when `org-export-show-temporary-export-buffer' is
-non-nil."
-  (interactive)
-  (let (;; need to bind this because tufte treats footnotes specially, so we
-        ;; don't want to display them at the bottom
-        (org-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
-                                        org-html-footnotes-section
-                                      "<!-- %s --><!-- %s -->")))
-    (org-export-to-buffer 'tufte-html "*Org Tufte Export*"
-      async subtreep visible-only nil nil (lambda () (text-mode)))))
-
 ;;; https://emacs.stackexchange.com/questions/27060/embed-image-as-base64-on-html-export-from-orgmode
 ;;; https://niklasfasching.de/posts/org-html-export-inline-images
 ;;; don't use url-insert-file-contents. instead use insert-file-contents
@@ -271,20 +245,109 @@ arguments CAPTION and LABEL are given, use them for caption and
 \"id\" attribute."
   (let ((html5-fancy (org-html--html5-fancy-p info)))
     (format (if html5-fancy "\n<figure%s><p>\n%s%s\n</figure>"
-	      "\n<div%s class=\"figure\"><p>\n%s%s\n</div>")
-	    ;; ID.
-	    (if (org-string-nw-p label) (format " id=\"%s\"" label) "")
-	    ;; Caption.
-	    (if (not (org-string-nw-p caption)) ""
-	      (format (if html5-fancy "\n<figcaption>%s</figcaption>"
-	                "\n<label for=\"mn-exports-imports\" class=\"margin-toggle\">⊕</label><input type=\"checkbox\" id=\"mn-exports-imports\" class=\"margin-toggle\"><span class=\"marginnote\">%s</span>")
-	              caption))
-	    ;; Contents.
-	    (if html5-fancy contents (format "%s</p>" contents))
+	          "\n<div%s class=\"figure\"><p>\n%s%s\n</div>")
+	        ;; ID.
+	        (if (org-string-nw-p label) (format " id=\"%s\"" label) "")
+	        ;; Caption.
+	        (if (not (org-string-nw-p caption)) ""
+	          (format (if html5-fancy "\n<figcaption>%s</figcaption>"
+	                    "\n<label for=\"mn-exports-imports\" class=\"margin-toggle\">⊕</label><input type=\"checkbox\" id=\"mn-exports-imports\" class=\"margin-toggle\"><span class=\"marginnote\">%s</span>")
+	                  caption))
+	        ;; Contents.
+	        (if html5-fancy contents (format "%s</p>" contents))
             )))
 
+;;;; Paragraph
+
+(defun org-tufte-html-paragraph (paragraph contents info)
+  "Transcode a PARAGRAPH element from Org to HTML.
+CONTENTS is the contents of the paragraph, as a string.  INFO is
+the plist used as a communication channel."
+  (let* ((parent (org-export-get-parent paragraph))
+	     (parent-type (org-element-type parent))
+	     (style '((footnote-definition " class=\"footpara\"")
+		          (org-data " class=\"footpara\"")))
+	     (attributes (org-html--make-attribute-string
+		              (org-export-read-attribute :attr_html paragraph)))
+	     (extra (or (cadr (assq parent-type style)) "")))
+    (cond
+     ((and (eq parent-type 'item)
+	       (not (org-export-get-previous-element paragraph info))
+	       (let ((followers (org-export-get-next-element paragraph info 2)))
+	         (and (not (cdr followers))
+		          (memq (org-element-type (car followers)) '(nil plain-list)))))
+      ;; First paragraph in an  item has no tag if it is alone or
+      ;; followed, at most, by a sub-list.
+      contents)
+     ((org-html-standalone-image-p paragraph info)
+      ;; Standalone image.
+      (let ((caption
+	         (let ((raw (org-export-data
+			             (org-export-get-caption paragraph) info))
+		           (org-html-standalone-image-predicate
+		            #'org-html--has-caption-p))
+	           (if (not (org-string-nw-p raw)) raw
+		         (concat "<span class=\"figure-number\">"
+			             (format (org-html--translate "Figure %d:" info)
+				                 (org-export-get-ordinal
+				                  (org-element-map paragraph 'link
+				                    #'identity info t)
+				                  info nil #'org-html-standalone-image-p))
+			             " </span>"
+			             raw))))
+	        (label (org-html--reference paragraph info)))
+	    (org-tufte-html-wrap-image contents info caption label)))
+     ;; Regular paragraph.
+     (t (format "<p%s%s>\n%s</p>"
+		        (if (org-string-nw-p attributes)
+		            (concat " " attributes) "")
+		        extra contents)))))
+
+;;; Export functions
+
+
 ;;;###autoload
-(defun org-tufte-export-to-file (&optional async subtreep visible-only)
+(defun org-tufte-export-to-buffer
+    (&optional async subtreep visible-only body-only ext-plist)
+  "Export current buffer to a Tufte HTML buffer.
+
+If narrowing is active in the current buffer, only export its
+narrowed part.
+
+If a region is active, export that region.
+
+A non-nil optional argument ASYNC means the process should happen
+asynchronously.  The resulting buffer should be accessible
+through the `org-export-stack' interface.
+
+When optional argument SUBTREEP is non-nil, export the sub-tree
+at point, extracting information from the headline properties
+first.
+
+When optional argument VISIBLE-ONLY is non-nil, don't export
+contents of hidden elements.
+
+EXT-PLIST, when provided, is a property list with external
+parameters overriding Org default settings, but still inferior to
+file-local settings.
+
+Export is done in a buffer named \"*Org Tufte Export*\", which will
+be displayed when `org-export-show-temporary-export-buffer' is
+non-nil."
+  (interactive)
+  (let (;; need to bind this because tufte treats footnotes specially, so we
+        ;; don't want to display them at the bottom
+        (org-tufte-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
+                                              org-html-footnotes-section
+                                            "<!-- %s --><!-- %s -->")))
+    (org-export-to-buffer 'tufte-html "*Org Tufte Export*"
+      async subtreep visible-only body-only ext-plist
+      (lambda () (text-mode)))))
+
+
+;;;###autoload
+(defun org-tufte-export-to-html
+    (&optional async subtreep visible-only body-only ext-plist)
   "Export current buffer to a Tufte HTML file.
 If narrowing is active in the current buffer, only export its
 narrowed part. If a region is active, export that region.
@@ -299,20 +362,26 @@ first.
 
 When optional argument VISIBLE-ONLY is non-nil, don't export
 contents of hidden elements.
+
+When optional argument BODY-ONLY is non-nil, only write code
+between \"<body>\" and \"</body>\" tags.
+
+EXT-PLIST, when provided, is a property list with external
+parameters overriding Org default settings, but still inferior to
+file-local settings.
+
 Return output file's name."
   (interactive)
-  (let ((outfile (org-export-output-file-name ".html" subtreep))
+  (let ((ofile (org-export-output-file-name ".html" subtreep))
         ;; need to bind this because tufte treats footnotes specially, so we
         ;; don't want to display them at the bottom
-        (org-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
-                                        org-html-footnotes-section
-                                      "<!-- %s --><!-- %s -->")))
+        (org-tufte-html-footnotes-section (if org-tufte-include-footnotes-at-bottom
+                                              org-html-footnotes-section
+                                            "<!-- %s --><!-- %s -->")))
     (if org-tufte-embed-images
-        (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline)
-                  ((symbol-function 'org-html--wrap-image) 'org-tufte-html-wrap-image))
-          (org-export-to-file 'tufte-html outfile async subtreep visible-only))
-      (cl-letf (((symbol-function 'org-html--wrap-image) 'org-tufte-html-wrap-image))
-        (org-export-to-file 'tufte-html outfile async subtreep visible-only)))))
+        (cl-letf (((symbol-function 'org-html--format-image) 'org-tufte-format-image-inline))
+          (org-export-to-file 'tufte-html ofile async subtreep visible-only body-only ext-plist))
+      (org-export-to-file 'tufte-html ofile async subtreep visible-only body-only ext-plist))))
 
 ;;; publishing function
 
@@ -336,7 +405,7 @@ Return output file name."
 (defun export-org-tufte-html ()
   "Export org file to Tufte-like html and open it"
   (interactive)
-  (org-open-file (org-tufte-export-to-file)))
+  (org-open-file (org-tufte-export-to-html)))
 
 (provide 'org-tufte)
 ;;; org-tufte.el ends here

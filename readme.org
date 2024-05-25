@@ -68,6 +68,8 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 [[file:example-2.jpg]]
 
 * Changelog
+** v0.7.0
+- Can work properly with ~rg-publish-org-to~
 ** v0.6.0
 - Make ~export-org-tufte-html~ command as function
 ** v0.5.0
@@ -87,5 +89,5 @@ see the [[https://zilongli.org/code/org-tufte-example.html][example]] page here 
 
 * Credits
 some codes are copied from
-- https://github.com/sulami/sulami.github.io/blob/develop/config.el
 - https://github.com/dakrone/ox-tufte
+- https://github.com/sulami/sulami.github.io/blob/develop/config.el
