@@ -223,8 +223,14 @@ link. INFO is a plist holding contextual information."
 (defun org-tufte-src-block (src-block contents info)
   "Transcode SRC-BLOCK element into Tufte HTML format. CONTENTS
 is nil. INFO is a plist used as a communication channel."
-  (format "<pre class=\"code\"><code>%s</code></pre>"
-          (org-html-format-code src-block info)))
+  (let ((caption (org-export-get-caption src-block)))
+    ;; check if there is a caption.for src
+	(if (not caption) (format "<pre class=\"code\"><code>%s</code></pre>"
+                              (org-html-format-code src-block info))
+	  (format "<details><summary>%s</summary><pre class=\"code\"><code>%s</code></pre></details>"
+			  (org-trim (org-export-data caption info))
+              (org-html-format-code src-block info))))
+  )
 
 ;;; https://emacs.stackexchange.com/questions/27060/embed-image-as-base64-on-html-export-from-orgmode
 ;;; https://niklasfasching.de/posts/org-html-export-inline-images
