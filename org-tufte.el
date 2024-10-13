@@ -6,7 +6,7 @@
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
 ;; Created: March 14, 2023
 ;; Modified: April 14, 2024
-;; Version: 0.7.0
+;; Version: 0.8.0
 ;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
 ;; Package-Requires: ((org "9.5") (emacs "27.1"))
@@ -256,8 +256,8 @@ arguments CAPTION and LABEL are given, use them for caption and
 	        (if (org-string-nw-p label) (format " id=\"%s\"" label) "")
 	        ;; Caption.
 	        (if (not (org-string-nw-p caption)) ""
-	          (format (if html5-fancy "\n<figcaption>%s</figcaption>"
-	                    "\n<label for=\"mn-exports-imports\" class=\"margin-toggle\">⊕</label><input type=\"checkbox\" id=\"mn-exports-imports\" class=\"margin-toggle\"><span class=\"marginnote\">%s</span>")
+	          (format 
+	           "\n<label for=\"mn-exports-imports\" class=\"margin-toggle\">⊕</label><input type=\"checkbox\" id=\"mn-exports-imports\" class=\"margin-toggle\"><span class=\"marginnote\">%s</span>"
 	                  caption))
 	        ;; Contents.
 	        (if html5-fancy contents (format "%s</p>" contents))
