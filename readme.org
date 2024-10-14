@@ -39,6 +39,8 @@ Just fetch [[file:org-tufte.el]] and save it somewhere. Then load it
   (setq org-tufte-htmlize-code t  ;; htmlize and beautify source code!
         org-tufte-embed-images nil ;; do not embed images. faster!
         org-tufte-goto-top-button t ;; add go-to-top button in html
+        org-html-html5-fancy t  ;; enable html5 elements
+        org-html-doctype "html5" ;; html5 page
         )
   )
 #+end_src
@@ -66,6 +68,8 @@ configuration.
 #+end_src
 
 * Changelog
+** v0.8.0
+- fullwidth image is supported for html5 page via =#+attr_html: :class fullwidth=
 ** v0.7.0
 - Can work properly with ~rg-publish-org-to~
 ** v0.6.0

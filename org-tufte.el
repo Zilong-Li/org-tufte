@@ -244,16 +244,16 @@ is nil. INFO is a plist used as a communication channel."
     (org-html-close-tag "img" (org-html--make-attribute-string attributes) info)))
 
 
-(defun org-tufte-html-wrap-image (contents info &optional caption label)
+(defun org-tufte-html-wrap-image (contents info &optional attributes caption label)
   "Wrap CONTENTS string within an appropriate environment for images.
-INFO is a plist used as a communication channel.  When optional
+INFO is a plist used as a communication channel. When optional
 arguments CAPTION and LABEL are given, use them for caption and
-\"id\" attribute."
+\"id\" attribute. When html_doctype is html5, then put ATTRIBUTES in <figure> element"
   (let ((html5-fancy (org-html--html5-fancy-p info)))
-    (format (if html5-fancy "\n<figure%s><p>\n%s%s\n</figure>"
+    (format (if html5-fancy "\n<figure %s><p>\n%s%s\n</figure>"
 	          "\n<div%s class=\"figure\"><p>\n%s%s\n</div>")
 	        ;; ID.
-	        (if (org-string-nw-p label) (format " id=\"%s\"" label) "")
+	        (if html5-fancy attributes (if (org-string-nw-p label) (format " id=\"%s\"" label) ""))
 	        ;; Caption.
 	        (if (not (org-string-nw-p caption)) ""
 	          (format 
@@ -302,7 +302,7 @@ the plist used as a communication channel."
 			             " </span>"
 			             raw))))
 	        (label (org-html--reference paragraph info)))
-	    (org-tufte-html-wrap-image contents info caption label)))
+	    (org-tufte-html-wrap-image contents info attributes caption label)))
      ;; Regular paragraph.
      (t (format "<p%s%s>\n%s</p>"
 		        (if (org-string-nw-p attributes)
