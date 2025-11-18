@@ -36,7 +36,7 @@ Just fetch [[file:org-tufte.el]] and save it somewhere. Then load it
   :ensure nil
   :load-path "PATH"
   :config
-  (setq org-tufte-htmlize-code t  ;; htmlize and beautify source code!
+  (setq org-tufte-htmlize-light-theme nil  ;; disable the default light theme
         org-tufte-embed-images nil ;; do not embed images. faster!
         org-tufte-goto-top-button t ;; add go-to-top button in html
         org-html-html5-fancy t  ;; enable html5 elements
