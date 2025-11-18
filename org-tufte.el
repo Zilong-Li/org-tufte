@@ -5,8 +5,8 @@
 ;; Author: Zilong Li <zilong.dk@gmail.com>
 ;; Maintainer: Zilong Li <zilong.dk@gmail.com>
 ;; Created: March 14, 2023
-;; Modified: April 14, 2024
-;; Version: 0.8.0
+;; Modified: November 18, 2025
+;; Version: 0.9.0
 ;; Keywords: org html tufte css
 ;; Homepage: https://github.com/Zilong-Li/org-tufte
 ;; Package-Requires: ((org "9.5") (emacs "27.1"))
@@ -14,7 +14,9 @@
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; Commentary:
-;;
+;; v0.9.0:
+;; - rename `org-tufte-htmlize-code' to `org-tufte-htmlize-light-theme'
+;; - disable the source code highlighting by  (setq org-html-htmlize-output-type nil)
 ;;; Code:
 
 (require 'ox)
@@ -44,8 +46,8 @@
   :group 'org-tufte-export
   :type 'boolean)
 
-(defcustom org-tufte-htmlize-code nil
-  "Non-nil will htmlize src code when exporting to html."
+(defcustom org-tufte-htmlize-light-theme t
+  "Non-nil will use the dark theme of the original tufte.css."
   :group 'org-tufte-export
   :type 'boolean)
 

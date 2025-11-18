@@ -47,11 +47,20 @@ Just fetch [[file:org-tufte.el]] and save it somewhere. Then load it
 
 * Customization
 
-** highlighting source code
-I feel being distracted by too many colors when reading blogs. Although the highlight of code block is not enabled, you can get this feature by the following configuration.
+** Dark theme
+
+Currently, I used a light theme. If you want the dark theme of the original tufte.css, you should add this setup. 
 
 #+begin_src emacs-lisp
-(setq org-tufte-htmlize-code t)
+(setq org-tufte-htmlize-light-theme nil)
+#+end_src
+
+** highlighting source code
+
+You can disable the source code highlighting by customizing the option of org-mode like the following
+
+#+begin_src emacs-lisp
+(setq org-html-htmlize-output-type nil)
 #+end_src
 
 ** embedding images in html
@@ -68,6 +77,9 @@ configuration.
 #+end_src
 
 * Changelog
+** v0.9.0
+- rename `org-tufte-htmlize-code' to `org-tufte-htmlize-light-theme'
+- disable the source code highlighting by  (setq org-html-htmlize-output-type nil)
 ** v0.8.0
 - fullwidth image is supported for html5 page via =#+attr_html: :class fullwidth=
 ** v0.7.0
