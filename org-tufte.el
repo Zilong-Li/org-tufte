@@ -111,7 +111,7 @@
            (org-export-data (plist-get info :author) info))
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/normalize.css\" type=\"text/css\" />\n"
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/tufte.css\" type=\"text/css\" />\n"
-   (when org-tufte-htmlize-code
+   (when org-tufte-htmlize-light-theme
      (format "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/htmlize.css\" type=\"text/css\" />\n"))
    "<link rel=\"stylesheet\" href=\"https://zilongli.org/code/org.css\" type=\"text/css\" />\n"
    org-tufte-katex-template
